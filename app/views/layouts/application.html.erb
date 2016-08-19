@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Schools" %></title>
+    <%= csrf_meta_tags %>
+
+     <!-- Bootstrap -->
+    <link  href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <%= stylesheet_link_tag "application", :media => "all" %>
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <!-- Size should be 144 x 144 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+
+    <!-- For iPhone with high-resolution Retina display: -->
+    <!-- Size should be 114 x 114 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+
+    <!-- For first- and second-generation iPad: -->
+    <!-- Size should be 72 x 72 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <!-- Size should be 57 x 57 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+
+    <!-- For all other devices -->
+    <!-- Size should be 32 x 32 pixels -->
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+
+    <%= javascript_include_tag "application" %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- [if Lt IE 9] -->
+       <script src="https://OSS.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://OSS.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+       <!--[endif]-->
+
+       <!-- Optional theme -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrap/3.2.0/css/bootstrap.min.css">
+
+  
+
+     <style>
+    .grey{
+         background-color: #ccc;
+         padding: 15px;
+         
+         margin-right: -65px;
+
+       }
+    </style>
+
+    <style>
+      .row{
+         
+          padding: 20px;
+        }
+      </style>
+
+  </head>
+  <body>
+    <header>
+            <!-- JQery (neccessary for Bootstrap's Javascript plugins) -->
+             <script src="https://maxcdn.bootstrap/3.2.0/js/bootstrap.min.js"></script>
+             <script src="https://ajax.googleapis.com/ajax/libs/jquery-2.1.1/jquery.min.js"></script>
+             <!-- Include all compiled plugins(below), or include indiv idual files as needed -->
+             <script src="js/bootstrap.min.js"></script>
+
+
+    <div class="jumbotron">
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Schools</a>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <ul class="nav navbar-nav pull-right">
+          	<% if user_signed_in? %>
+              <li><%= link_to current_user.email, edit_user_registration_path %></li>
+              <li><%= link_to "Deconnexion", destroy_user_session_path, method: :delete %> </li>
+            <% else %>
+              <li><%= link_to "Inscription", new_user_registration_path  %></li>
+              <li><%= link_to "Connexion", new_user_session_path  %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-push-6">
+          <%= bootstrap_flash %>
+          <%= yield %>
+        </div>
+        <div class="col-md-6 col-sm-pull-6">
+          <div class="well sidebar-nav">
+            <h3>Sidebar</h3>
+            <ul class="nav nav-list">
+              <% if user_signed_in? && current_user.role_id == 1 %>
+                <li class="nav-header">Sidebar</li>
+                <li><%= link_to "Gestion classe", classrooms_path %></li>
+                <li><%= link_to "Gestion Eleve", students_path  %></li>
+                <li><%= link_to "Gestion Matière", matieres_path  %></li>
+                <li><%= link_to "Eleve non inscris", noninscrisd_index_path  %></li>
+              <% end %>              
+              <% if user_signed_in? && current_user.role_id == 2 %>
+                <li class="nav-header">Sidebar</li>
+                <li><%= link_to 'Gérer Notes', new_matiere_path %></li>
+                <li><%= link_to 'Liste Matières', matieres_path %></li>
+                <li><%= link_to 'Inscrir un Eleve', new_student_path %></li>
+                <li><%= link_to "Preinscription", students_path  %></li>
+                <li><%= link_to "Mes Eleves", meseleves_index_path  %></li>
+              <% end %>
+              <% if user_signed_in? && current_user.role_id == 3 %>
+                <li class="nav-header">Sidebar</li>
+                <li><%= link_to "Mes Eleves", classrooms_path %></li>
+              <% end %>
+              <% if user_signed_in? && current_user.role_id == 4 %>
+                <li class="nav-header">Sidebar</li>
+                <li><%= link_to 'Inscrir un Eleve', new_student_path %></li>
+                <li><%= link_to "Preinscription",  noninscris_index_path  %></li>
+                <li><%= link_to "Mes Eleves", meseleves_index_path  %></li>
+              <% end %>
+              
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <footer>
+        <div class="container">
+           <hr>
+
+           <p> <small> <a href="http://facebook.com/askorama" class="btn btn-primary btn-xs">Like me 
+              </a> On Facebook</small>
+           </p>
+           <p> <small> <a href="http://twitter.com/wiredwiki" class="btn btn-primary btn-xs">Ask whatever
+              </a> On Twitter</small>
+           </p>
+           <p> <small> <a href="http://youtube.com/wiredwiki" class="btn btn-primary btn-xs">Subscribe me 
+              </a> On youtube</small>
+           </p>
+                      
+
+
+
+        </div><!-- end container-->
+        <hr>
+        <div class="grey">
+         <div class ="container">
+
+        <div class="well"> &copy; Company 2016 </div>
+      </div>
+    </div>
+      </footer>
+
+    </div> <!-- /container -->
+   <script src="https://maxcdn.bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+  </body>
+</html>
+              

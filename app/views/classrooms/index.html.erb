@@ -1,0 +1,32 @@
+
+
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Classrooms</h1>
+
+<table class="table table-striped" width="10%">
+  
+    <tr class="danger">
+      <th>Nom</th>
+      <th colspan="3"></th>
+    </tr>
+  
+
+
+    <% @classrooms.each do |classroom| %>
+      <tr class="warning">
+        <td><%= classroom.nom %></td>
+        <td><%= link_to 'Show', classroom,class: "btn btn-info" %></td>
+        <% if can? :manage ,@classroom%>
+        <td><%= link_to 'Edit', edit_classroom_path(classroom),class: "btn btn-success" %></td>
+        <td><%= link_to 'Destroy', classroom, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+</table>
+
+
+<br>
+<% if can? :manage ,@classroom%>
+<%= link_to 'New Classroom', new_classroom_path,class: "btn btn-warning" %>
+<% end %>

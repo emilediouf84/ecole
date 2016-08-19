@@ -1,0 +1,35 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @matiere.nom %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @matiere.note %>
+</p>
+
+<p>
+  <strong>Emailprof:</strong>
+  <%= @matiere.emailprof %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @matiere.user%>
+</p>
+
+<p>
+  <strong>Classroom:</strong>
+  <%= @matiere.classroom.nom %>
+</p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @matiere.student.first_name %>
+</p>
+
+<%= link_to 'Edit', edit_matiere_path(@matiere),class: "btn btn-success" %> |
+<%= link_to 'Back', matieres_path,class: "btn btn-warning" %>
